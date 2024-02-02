@@ -1,7 +1,5 @@
 # SQL (Structured Query Language)
 
-# SQL Notes
-
 -   SQL is not Database , It is a Query Based language.
 -   MySQL is DataBase , and We read SQL for use MySQL database
 
@@ -180,8 +178,8 @@ CREATE TABLE user(
    age INT,
    Name VARCHAR(30) NOT NULL,
    Email VARCHAR(30) UNIQUE,
-   Followers INT DEFAULT 0,
-   Following INT
+   Followers INT,
+   Following INT,
    CONSTRAINT age_check CHECK (age>=13 AND Followers>=100));
 );
 
@@ -231,3 +229,261 @@ VALUES
 (3,14,"Surela","kri@gmail.com",360,520),
 (4,14,"Bansur","k@gmail.com",330,160),
 ```
+
+## 3. Select Cammand
+
+### Selects & show data from the table in DB
+
+```sql
+=>SELECT id,name,email FROM user;
+
+=>SELECT * FROM user;
+
+```
+
+### Select unique data in order to column from table
+
+```sql
+=> SELECT DISTINCT age FROM user
+```
+
+### Where Clause
+
+-   To define some condition
+
+```sql
+=> SELECT col1,col2
+FROM table_name
+WHERE conditions;
+
+=> SELECT name ,followers
+FROM user
+WHERE age >=10;
+
+```
+
+### Where Clause Operators
+
+#### Arithmetic Operators
+
+-   +, - , \* , / , %
+
+##### FIND THE USER WHO ARE GOING TO BE 18 YEAR OLD NEXT YEAR
+
+```SQL
+SELECT name,age
+FROM user
+WHERE age+1=18;
+```
+
+##### FIND THE USER WHO WAS ALREADY 18 YEAR OLD PREVIOUS YEAR
+
+```SQL
+SELECT name,age
+FROM user
+WHERE age-1=18;
+```
+
+#### Comparison Operators
+
+-   = , != , > , < , >= , <=
+
+```sql
+SELECT name ,followers
+FROM user
+WHERE age >=10;
+```
+
+#### Logical Operators
+
+##### AND => ( To check for both conditions to be true)
+
+```sql
+SELECT name,age
+FROM user
+WHERE age>15 AND followers>200;
+```
+
+##### OR => ( To check for of of the condition to be true)
+
+```sql
+SELECT name,age
+FROM user
+WHERE age>15 OR followers>200;
+```
+
+##### NOT => (To negate the given condition)
+
+```sql
+SELECT name,age,email
+FROM user
+WHERE age NOT IN (14,16);
+```
+
+##### IN => (Matches any value in the GIVEN list)
+
+```sql
+=> SELECT name,age
+FROM user
+WHERE email IN ("k@gmail.com","kri@gmail.com");
+
+=> SELECT name,age,email
+FROM user
+WHERE age IN (14,16);
+```
+
+##### BETWEEN => (Selects for given range )
+
+```sql
+SELECT name,age
+FROM user
+WHERE age BETWEEN 14 AND 18;
+```
+
+#### ALL =>It used to compare a value to all values in a list or returned by a subquery.
+
+##### Here’s an example where we want to find teachers whose age is greater than all students:
+
+```sql
+SELECT * FROM Teachers WHERE age > ALL (SELECT age FROM Students);
+```
+
+#### LIKE => The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+
+#### Here’s an example where we want to find all customers that name start with “a” and are at least 3 characters in length:
+
+-   Name start with “a” and are at least 3 characters in length:
+
+```sql
+SELECT * FROM Customers
+WHERE CustomerName
+LIKE 'a__%';
+```
+
+-   Starts With a
+
+```sql
+SELECT * FROM Customers
+WHERE CustomerName
+LIKE 'a%';
+```
+
+-   Ends With a
+
+```sql
+SELECT * FROM Customers
+WHERE CustomerName
+LIKE '%a';
+```
+
+-   Contains a phrase 'or' in Customer Name
+
+```sql
+SELECT * FROM Customers
+WHERE CustomerName
+LIKE '%or%';
+```
+
+-   Specific Position: The _ wildcard represents a single character. It can be any character or number, but each _ represents one, and only one, character. For example, to return all user from a name column that starts with ‘P’ followed by one wildcard character, then ‘am’ and then two wildcard characters
+
+```sql
+SELECT * FROM user
+WHERE name
+LIKE 'P_am__';
+```
+
+-   Multiple Values: We can use the LIKE operator with multiple string patterns using the OR operator. For example, to return all customers that start with ‘a’ or start with ‘b’
+
+```sql
+SELECT * FROM Customers
+WHERE
+CustomerName LIKE 'a%'
+OR
+CustomerName LIKE 'b%';
+```
+
+#### ANY => The ANY operator is used to compare a value to any applicable value in a list or returned by a subquery.
+
+-   Here’s an example where we want to find teachers whose age is similar to any of the student’s age
+
+```sql
+SELECT * FROM Teachers WHERE age = ANY (SELECT age FROM Students);
+```
+
+### Bitwise Operators
+
+-   & (Bitwise AND) , | (Bitwise OR)
+
+### LIMIT Clause =>
+
+#### It sets upper limit on number of row (tuples) to be returned
+
+```sql
+=> SELECT name,age
+FROM user
+WHERE age>=14
+LIMIT 2;
+
+=> SELECT name,age
+FROM user
+LIMIT 2;
+```
+
+### ORDER BY Clause =>
+
+#### To sort the data in Ascending(ASC) or Descending(DESC) Order
+#### Order By (Defaultly Ascending Order) 
+
+
+```sql
+=> SELECT col1,col2
+FROM table_name
+ORDER BY col_name(s) ASC;
+
+=> SELECT name,age 
+FROM user
+ORDER BY age DESC
+LIMIT 3;
+
+=> 
+SELECT name,age 
+FROM user
+ORDER BY age ASC;
+
+=> SELECT name,age 
+FROM user
+ORDER BY age;
+```
+### Aggregate Functions =>
+
+#### Aggregate functions are predefined function in SQL , It perfoms a calculation on a set of values , and return a single value.
+
+- COUNT()
+- MAX()
+- MIN()
+- SUM()
+- AVG()
+
+#### Example :
+
+```sql
+=> SELECT MAX(age)
+FROM user;
+
+=> SELECT COUNT(age)
+FROM user
+WHERE age =14;
+
+=> SELECT MIN(age)
+FROM user;
+
+=> SELECT AVG(age)
+FROM user;
+
+=> SELECT SUM(Followers)
+FROM user;
+```
+
+### Group By Clause =>
+
+
