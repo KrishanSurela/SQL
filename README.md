@@ -67,7 +67,8 @@ CREATE TABLE student{
 ## Query for insert data into existing table
 
 ```sql
-INSERT INTO student VALUES (101,"KRISHAN",23),(102,"SURELA",21);
+INSERT INTO student
+VALUES (101,"KRISHAN",23),(102,"SURELA",21);
 ```
 
 ## Query for Retrive all Data from Table
@@ -148,7 +149,8 @@ CREATE TABLE user(
     Email VARCHAR(30) UNIQUE,
     Followers INT DEFAULT 0,
     Following INT
-    CONSTRAINT age_check CHECK (age>=13 AND Followers>=100)
+    CONSTRAINT age_check
+    CHECK (age>=13 AND Followers>=100)
 );
 ```
 
@@ -165,9 +167,10 @@ CREATE TABLE user(
    age INT,
    Name VARCHAR(30) NOT NULL,
    Email VARCHAR(30) UNIQUE,
-   Followers INT DEFAULT 0,
-   Following INT
-   CONSTRAINT age_check CHECK (age>=13 AND Followers>=100));
+   Followers INT,
+   Following INT,
+   CONSTRAINT age_check
+   CHECK (age>=13 AND Followers>=100));
    PRIMARY KEY(id)
 );
 
@@ -180,7 +183,8 @@ CREATE TABLE user(
    Email VARCHAR(30) UNIQUE,
    Followers INT,
    Following INT,
-   CONSTRAINT age_check CHECK (age>=13 AND Followers>=100));
+   CONSTRAINT age_check
+   CHECK (age>=13 AND Followers>=100));
 );
 
 ```
@@ -325,7 +329,8 @@ WHERE age NOT IN (14,16);
 ```sql
 => SELECT name,age
 FROM user
-WHERE email IN ("k@gmail.com","kri@gmail.com");
+WHERE email
+IN ("k@gmail.com","kri@gmail.com");
 
 => SELECT name,age,email
 FROM user
@@ -345,7 +350,9 @@ WHERE age BETWEEN 14 AND 18;
 ##### Here’s an example where we want to find teachers whose age is greater than all students:
 
 ```sql
-SELECT * FROM Teachers WHERE age > ALL (SELECT age FROM Students);
+SELECT * FROM Teachers
+WHERE age > ALL
+(SELECT age FROM Students);
 ```
 
 #### LIKE => The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
@@ -407,7 +414,9 @@ CustomerName LIKE 'b%';
 -   Here’s an example where we want to find teachers whose age is similar to any of the student’s age
 
 ```sql
-SELECT * FROM Teachers WHERE age = ANY (SELECT age FROM Students);
+SELECT * FROM Teachers
+WHERE age = ANY
+(SELECT age FROM Students);
 ```
 
 ### Bitwise Operators
@@ -429,40 +438,69 @@ FROM user
 LIMIT 2;
 ```
 
+#### With OFFSET: To skip the first 5 rows and then return the next 10 rows
+
+```sql
+=> SELECT * FROM employees
+ LIMIT 10 OFFSET 5;
+
+//OR
+
+=> SELECT * FROM employees
+ LIMIT 5, 10;
+```
+
+### Questions :
+
+#### To get the name with 2nd highest followers
+
+```sql
+SELECT name FROM user
+ORDER BY followers DESC LIMIT 1,1;
+```
+
+#### To get the name with 3rd highest followers
+
+```sql
+SELECT name FROM user
+ORDER BY followers DESC LIMIT 2,1;
+```
+
 ### ORDER BY Clause =>
 
 #### To sort the data in Ascending(ASC) or Descending(DESC) Order
-#### Order By (Defaultly Ascending Order) 
 
+#### Order By (Defaultly Ascending Order)
 
 ```sql
 => SELECT col1,col2
 FROM table_name
 ORDER BY col_name(s) ASC;
 
-=> SELECT name,age 
+=> SELECT name,age
 FROM user
 ORDER BY age DESC
 LIMIT 3;
 
-=> 
-SELECT name,age 
+=>
+SELECT name,age
 FROM user
 ORDER BY age ASC;
 
-=> SELECT name,age 
+=> SELECT name,age
 FROM user
 ORDER BY age;
 ```
+
 ### Aggregate Functions =>
 
 #### Aggregate functions are predefined function in SQL , It perfoms a calculation on a set of values , and return a single value.
 
-- COUNT()
-- MAX()
-- MIN()
-- SUM()
-- AVG()
+-   COUNT()
+-   MAX()
+-   MIN()
+-   SUM()
+-   AVG()
 
 #### Example :
 
@@ -486,4 +524,177 @@ FROM user;
 
 ### Group By Clause =>
 
+#### Groups rows that have the same values into summary rows.
 
+#### It collects data from multiple records and groups the result by one or more column
+
+#### \* Generally we use group by with some aggregation function
+
+```sql
+SELECT age,COUNT(id)
+FROM user
+GROUP BY age;
+```
+
+#### Output :
+
+```sql
+ Age      COUNT(id)
+  14          2
+  15          1
+  17          1
+  19          2
+```
+
+#### Maximum Followers Group :
+
+```sql
+SELECT age,MAX(Followers)
+FROM user
+GROUP BY age;
+```
+
+#### Output : Here maximum followers are 360 in the 14 year age group and so on...
+
+```sql
+ Age      COUNT(Followers)
+  14          360
+  15          310
+  17          330
+  19          350
+```
+
+#### We can not write this type of query
+
+#### \* The field we are going to select outside of Aggregation function should be same according to column that is using in group by clause.
+
+```sql
+SELECT name,age,MAX(Followers)
+FROM user
+GROUP BY age;
+```
+
+### HAVING Clause
+
+#### Similiar to Where clause i.e. applies some condition on rows
+
+#### But it is used when we want to apply any condition after grouping.
+
+#### \* WHERE is for the table, HAVING is for group
+
+#### \* Grouping is necessary for HAVING
+
+```sql
+SELECT age , MAX(Followers)
+FROM user
+GROUP BY age
+HAVING MAX(Followers)>320;
+```
+
+### GENERAL ORDER FOR Clauses
+
+```sql
+SELECT column(s)
+FROM table_name
+WHERE condition
+GROUP BY column(s)
+HAVING condition
+ORDER BY column(s) ASC;
+```
+
+### Table Query : -
+
+-   Update (To update existing rows)
+
+```sql
+UPDATE user
+SET Followers=600
+WHERE age =15;
+SET SQL_SAFE_UPDATE=0;
+```
+
+-   Delete ( To delete existing rows or tuples)
+
+```sql
+DELETE FROM user
+WHERE age=14;
+```
+
+#### Error : when we delete parent table rows - Means Primary key is in parent table. which is using as a foreign key in another table So we dont able to delete rows from parent table.
+
+-   Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`college`.`post`, CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)) 0.000 sec
+
+#### Solution :
+
+```sql
+DELETE FROM post WHERE
+user_id=2;
+
+DELETE FROM user WHERE
+id= 2;
+```
+
+## ALTER Query : -
+
+-   To change the schema or column
+
+#### ADD Column
+
+```sql
+ALTER TABLE user
+ADD COLUMN city
+VARCHAR(30) NOT NULL
+```
+
+#### DROP Column
+
+```sql
+ALTER TABLE user
+DROP COLUMN city
+```
+
+#### MODIFY Column Datatype
+
+-   We can change the data type and constraints of an existing column
+
+```sql
+ALTER TABLE post
+MODIFY COLUMN id VARCHAR(20);
+```
+
+#### RENAME Table
+
+```sql
+ALTER TABLE post
+RENAME TO student ;
+```
+
+#### RENAME Column (To change column name)
+
+-   The RENAME keyword is used to change the name of a table or a column. Not for change the datatypes and constraints
+
+```sql
+ALTER TABLE post
+RENAME COLUMN
+content TO fullname;
+```
+
+#### CHANGE Column ( To change column name and its datatypes / constraints)
+
+```sql
+ALTER TABLE user
+CHANGE COLUMN Followers Subscribers
+INT DEFAULT 0;
+```
+
+#### TRUNCATE
+
+-   To Delete tabls's data
+-   Primary and Foreign key issue So we drop post table first.
+
+```sql
+
+DROP table post;
+
+TRUNCATE TABLE user;
+```
