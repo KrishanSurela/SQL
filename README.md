@@ -689,7 +689,7 @@ INT DEFAULT 0;
 
 #### TRUNCATE
 
--   To Delete tabls's data
+-   To Delete table's data
 -   Primary and Foreign key issue So we drop post table first.
 
 ```sql
@@ -697,4 +697,139 @@ INT DEFAULT 0;
 DROP table post;
 
 TRUNCATE TABLE user;
+```
+
+### Candidate Key:
+
+#### The minimal set of attributes that can uniquely identify a tuple is known as a candidate key. For example, STUD_NO in the STUDENT relation is a candidate key. It is a minimal super key. Here’s an example:
+
+```sql
+CREATE TABLE STUDENT (
+    STUD_NO INT PRIMARY KEY,
+    SNAME VARCHAR(100),
+    ADDRESS VARCHAR(100),
+    PHONE VARCHAR(10)
+);
+```
+
+-   In this table, STUD_NO is a candidate key because it can uniquely identify each student.
+
+### Super Key:
+
+#### The set of attributes that can uniquely identify a tuple is known as a super key. For example, STUD_NO, (STUD_NO, SNAME), etc. are super keys. A super key is a group of single or multiple keys that identifies rows in a table. Here’s an example:
+
+```sql
+CREATE TABLE STUDENT (
+    STUD_NO INT,
+    SNAME VARCHAR(100),
+    ADDRESS VARCHAR(100),
+    PHONE VARCHAR(10),
+    UNIQUE (STUD_NO, PHONE)
+);
+```
+
+-   In this table, (STUD_NO, PHONE) is a super key because the combination of STUD_NO and PHONE can uniquely identify each student.
+
+-   Remember, every candidate key is a super key, but not every super key is a candidate key.
+
+### Alternate Key:
+
+#### An alternate key is a candidate key that is not the primary key. It has all the properties to become a primary key and so is an alternate option. For example, consider a Customer table with Customer ID, Pan Number, and Email Address as unique attributes.
+
+-   If Customer ID is chosen as the primary key, then Pan Number and Email Address will be alternate keys.
+
+```sql
+CREATE TABLE Customer (
+    Customer_ID INT PRIMARY KEY,
+    Pan_Number VARCHAR(10) UNIQUE,
+    Email_Address VARCHAR(100) UNIQUE
+);
+```
+
+## INSERT INTO SELECT Statement:-
+
+#### The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+#### The INSERT INTO SELECT statement requires that the data types in source and target tables match.
+
+-   Note: The existing records in the target table are unaffected.
+
+```sql
+INSERT INTO Customers (CustomerName, City,Country)
+SELECT SupplierName,City,Country FROM Suppliers;
+```
+
+## Create Table and copy all column in it from another table
+
+```sql
+CREATE TABLE customersbackup2025 AS SELECT * FROM Customers;
+```
+
+### IFNULL : -
+
+```sql
+SELECT IFNULL(Address,'Address is not given')
+FROM Suppliers ;
+```
+
+### CASE Expression :-
+
+```sql
+
+=> SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+```
+
+# ALIASES,JOINS,INNER JOIN,LEFT JOIN, RIGHT JOIN, FULL JOIN, SELF JOIN, UNION
+
+## Aliases : -
+
+### SQL aliases are used to give a temporary name to a table, or a column in a table,
+
+### Aliases are often used to make column names more readable.
+
+### An alias only exists for the duration of that query.
+
+### An alias is created with the AS keyword.
+
+### Alias on column
+
+-   To change Column name (CustomerID to ID ) from table---
+
+```sql
+=> SELECT column_name AS alias_name
+FROM table_name;
+
+=> SELECT CustomerID AS ID
+FROM Customers;
+```
+
+-   AS is Optional
+    Actually, in most database languages, you can skip the AS keyword and get the same result:
+
+```sql
+  SELECT CustomerID ID
+FROM Customers;
+```
+
+### Alias on Table
+
+```sql
+SELECT column_name(s)
+FROM table_name AS alias_name;
+```
+
+### Using [square brackets] for aliases with space characters:
+
+```sql
+=> SELECT ProductName AS [My Great Products]
+FROM Products;
+
+=> SELECT ProductName AS "My Great Products"
+FROM Products;
 ```
