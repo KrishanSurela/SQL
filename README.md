@@ -602,7 +602,7 @@ HAVING condition
 ORDER BY column(s) ASC;
 ```
 
-### Table Query : -
+### Table Query ->
 
 -   Update (To update existing rows)
 
@@ -634,7 +634,7 @@ DELETE FROM user WHERE
 id= 2;
 ```
 
-## ALTER Query : -
+## ALTER Query ->
 
 -   To change the schema or column
 
@@ -765,7 +765,7 @@ SELECT SupplierName,City,Country FROM Suppliers;
 CREATE TABLE customersbackup2025 AS SELECT * FROM Customers;
 ```
 
-### IFNULL : -
+### IFNULL ->
 
 ```sql
 SELECT IFNULL(Address,'Address is not given')
@@ -785,7 +785,7 @@ END AS QuantityText
 FROM OrderDetails;
 ```
 
-## Aliases : -
+## Aliases ->
 
 ### SQL aliases are used to give a temporary name to a table, or a column in a table,
 
@@ -832,7 +832,7 @@ FROM Products;
 FROM Products;
 ```
 
-## UNION : -
+## UNION ->
 
 ### The UNION operator is used to combine the result-set of two or more SELECT statements.
 
@@ -846,7 +846,7 @@ UNION
 SELECT column_name(s) FROM table2;
 ```
 
-## UNION ALL : -
+## UNION ALL ->
 
 ### The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL.
 
@@ -856,7 +856,7 @@ UNION ALL
 SELECT column_name(s) FROM table2;
 ```
 
-## UNION With WHERE Clause : -
+## UNION With WHERE Clause ->
 
 ```sql
 SELECT City, Country FROM Customers
@@ -867,13 +867,13 @@ WHERE Country='Germany'
 ORDER BY City;
 ```
 
-## JOIN : -
+## JOIN ->
 
 ### A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
 
 -   Atleast one Related Column name should be same in both table
 
-## INNER JOIN : -
+## INNER JOIN ->
 
 ### Returns records that have matching values in both tables (RETURN COMMON DATA FROM Table)
 
@@ -918,7 +918,7 @@ ProductId  ProductName  CategoryId      Price CategoryID     CategoryName   Desc
 
 ```
 
-## LEFT JOIN : -
+## LEFT JOIN ->
 
 ### Returns all records from the left table, and the matched(comman) records from the right table
 
