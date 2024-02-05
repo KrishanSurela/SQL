@@ -785,8 +785,6 @@ END AS QuantityText
 FROM OrderDetails;
 ```
 
-# ALIASES,JOINS,INNER JOIN,LEFT JOIN, RIGHT JOIN, FULL JOIN, SELF JOIN, UNION
-
 ## Aliases : -
 
 ### SQL aliases are used to give a temporary name to a table, or a column in a table,
@@ -832,4 +830,170 @@ FROM Products;
 
 => SELECT ProductName AS "My Great Products"
 FROM Products;
+```
+
+## UNION : -
+
+### The UNION operator is used to combine the result-set of two or more SELECT statements.
+
+-   Every SELECT statement within UNION must have the same number of columns
+-   The columns must also have similar data types
+-   The columns in every SELECT statement must also be in the same order
+
+```sql
+SELECT column_name(s) FROM table1
+UNION
+SELECT column_name(s) FROM table2;
+```
+
+## UNION ALL : -
+
+### The UNION operator selects only distinct values by default. To allow duplicate values, use UNION ALL.
+
+```sql
+SELECT column_name(s) FROM table1
+UNION ALL
+SELECT column_name(s) FROM table2;
+```
+
+## UNION With WHERE Clause : -
+
+```sql
+SELECT City, Country FROM Customers
+WHERE Country='Germany'
+UNION
+SELECT City, Country FROM Suppliers
+WHERE Country='Germany'
+ORDER BY City;
+```
+
+## JOIN : -
+
+### A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
+
+-   Atleast one Related Column name should be same in both table
+
+## INNER JOIN : -
+
+### Returns records that have matching values in both tables (RETURN COMMON DATA FROM Table)
+
+```sql
+=> SELECT Orders.OrderID,
+Customers.CustomerName,
+Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON
+Orders.CustomerID=Customers.CustomerID;
+
+
+=> SELECT Customers.Address,
+ Suppliers.PostalCode
+FROM Suppliers
+INNER JOIN Customers
+ON Suppliers.City=Customers.City;
+
+=> INSERT INTO Products
+(ProductId,ProductName,CategoryId,Price)
+VALUES
+(1,"Chais",1,18),
+(2,"Chang",	1,19),
+(3,"Aniseed Syrup",2,10);
+
+=> INSERT INTO Categories
+(CategoryId,CategoryName,Description)
+VALUES
+(1,"TOYS","children toy"),
+(2,"byke","Motor byke"),
+(3,"car","Honda car");
+
+=> SELECT  *
+FROM Products AS P
+INNER JOIN Categories AS C
+ON  P.CategoryId=C.CategoryId;
+
+ProductId  ProductName  CategoryId      Price CategoryID     CategoryName   Description
+'2',      'Chang',         '1',         '19',   '1',            'TOYS',     'children toy'
+'1',      'Chais',         '1',         '18',   '1',            'TOYS',     'children toy'
+'3',      'Aniseed Syrup', '2',         '10',   '2',            'byke',     'Motor byke'
+
+```
+
+## LEFT JOIN : -
+
+### Returns all records from the left table, and the matched(comman) records from the right table
+
+```sql
+SELECT  *
+FROM Products AS P
+LEFT JOIN Categories AS C
+ON  P.CategoryId=C.CategoryId;
+
+
+ProductId  ProductName  CategoryId      Price CategoryID     CategoryName   Description
+'2',      'Chang',         '1',         '19',   '1',            'TOYS',     'children toy'
+'1',      'Chais',         '1',         '18',   '1',            'TOYS',     'children toy'
+'3',      'Aniseed Syrup', '2',         '10',   '2',            'byke',     'Motor byke'
+```
+
+## RIGHT JOIN
+
+### Returns all records from the right table, and the matched(comman) records from the left table
+
+```sql
+SELECT  *
+FROM Products AS P
+right JOIN Categories AS C
+ON  P.CategoryId=C.CategoryId;
+
+ProductId  ProductName  CategoryId      Price CategoryID     CategoryName   Description
+'2',       'Chang',         '1',         '19',   '1',            'TOYS',     'children toy'
+'1',       'Chais',         '1',         '18',   '1',            'TOYS',     'children toy'
+'3',       'Aniseed Syrup', '2',         '10',   '2',            'byke',     'Motor byke'
+NULL,       NULL,           NULL,        NULL,   '3',            'car',      'Honda car'
+```
+
+## FULL OUTER JOIN
+
+### Returns all records when there is a match in either left or right table
+
+#### The error encountering is because MySQL does not support the FULL OUTER JOIN syntax. However, we can emulate a FULL OUTER JOIN in MySQL using a combination of LEFT JOIN and RIGHT JOIN with a UNION
+
+```sql
+SELECT *
+FROM Products AS P
+LEFT JOIN Categories AS C
+ON P.CategoryId = C.CategoryId
+
+UNION
+
+SELECT *
+FROM Products AS P
+RIGHT JOIN Categories AS C
+ON P.CategoryId = C.CategoryId
+
+ProductId  ProductName  CategoryId      Price CategoryID     CategoryName   Description
+'2',       'Chang',         '1',         '19',   '1',            'TOYS',     'children toy'
+'1',       'Chais',         '1',         '18',   '1',            'TOYS',     'children toy'
+'3',       'Aniseed Syrup', '2',         '10',   '2',            'byke',     'Motor byke'
+NULL,       NULL,           NULL,        NULL,   '3',            'car',      'Honda car'
+```
+
+## SELF JOIN
+
+### A Self join is a regular join in which a table is joined to itself.
+
+### Self Joins are powerful for comparing value of columns with the same table
+
+```sql
+=> SELECT column_name(s)
+FROM Table AS T1
+JOIN Table AS T2
+ON T1.col_name = T2.other_col_name;
+
+=> SELECT
+T1.empname AS employee_name ,
+T2.empname AS manager_name
+FROM emp AS T1
+JOIN emp AS T2
+ON T2.empid = T1.manager_id;
 ```
