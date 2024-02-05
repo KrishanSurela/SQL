@@ -347,7 +347,7 @@ WHERE age BETWEEN 14 AND 18;
 
 #### ALL =>It used to compare a value to all values in a list or returned by a subquery.
 
-##### Here’s an example where we want to find teachers whose age is greater than all students:
+##### Here’s an example where we want to find teachers whose age is greater than all students->
 
 ```sql
 SELECT * FROM Teachers
@@ -357,9 +357,9 @@ WHERE age > ALL
 
 #### LIKE => The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
 
-#### Here’s an example where we want to find all customers that name start with “a” and are at least 3 characters in length:
+#### Here’s an example where we want to find all customers that name start with “a” and are at least 3 characters in length->
 
--   Name start with “a” and are at least 3 characters in length:
+-   Name start with “a” and are at least 3 characters in length->
 
 ```sql
 SELECT * FROM Customers
@@ -391,7 +391,7 @@ WHERE CustomerName
 LIKE '%or%';
 ```
 
--   Specific Position: The _ wildcard represents a single character. It can be any character or number, but each _ represents one, and only one, character. For example, to return all user from a name column that starts with ‘P’ followed by one wildcard character, then ‘am’ and then two wildcard characters
+-   Specific Position-> The _ wildcard represents a single character. It can be any character or number, but each _ represents one, and only one, character. For example, to return all user from a name column that starts with ‘P’ followed by one wildcard character, then ‘am’ and then two wildcard characters
 
 ```sql
 SELECT * FROM user
@@ -399,7 +399,7 @@ WHERE name
 LIKE 'P_am__';
 ```
 
--   Multiple Values: We can use the LIKE operator with multiple string patterns using the OR operator. For example, to return all customers that start with ‘a’ or start with ‘b’
+-   Multiple Values-> We can use the LIKE operator with multiple string patterns using the OR operator. For example, to return all customers that start with ‘a’ or start with ‘b’
 
 ```sql
 SELECT * FROM Customers
@@ -438,7 +438,7 @@ FROM user
 LIMIT 2;
 ```
 
-#### With OFFSET: To skip the first 5 rows and then return the next 10 rows
+#### With OFFSET-> To skip the first 5 rows and then return the next 10 rows
 
 ```sql
 => SELECT * FROM employees
@@ -450,7 +450,7 @@ LIMIT 2;
  LIMIT 5, 10;
 ```
 
-### Questions :
+### Questions ->
 
 #### To get the name with 2nd highest followers
 
@@ -502,7 +502,7 @@ ORDER BY age;
 -   SUM()
 -   AVG()
 
-#### Example :
+#### Example ->
 
 ```sql
 => SELECT MAX(age)
@@ -536,7 +536,7 @@ FROM user
 GROUP BY age;
 ```
 
-#### Output :
+#### Output ->
 
 ```sql
  Age      COUNT(id)
@@ -546,7 +546,7 @@ GROUP BY age;
   19          2
 ```
 
-#### Maximum Followers Group :
+#### Maximum Followers Group ->
 
 ```sql
 SELECT age,MAX(Followers)
@@ -554,7 +554,7 @@ FROM user
 GROUP BY age;
 ```
 
-#### Output : Here maximum followers are 360 in the 14 year age group and so on...
+#### Output -> Here maximum followers are 360 in the 14 year age group and so on...
 
 ```sql
  Age      COUNT(Followers)
@@ -620,11 +620,11 @@ DELETE FROM user
 WHERE age=14;
 ```
 
-#### Error : when we delete parent table rows - Means Primary key is in parent table. which is using as a foreign key in another table So we dont able to delete rows from parent table.
+#### Error -> when we delete parent table rows - Means Primary key is in parent table. which is using as a foreign key in another table So we dont able to delete rows from parent table.
 
--   Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`college`.`post`, CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)) 0.000 sec
+-   Error Code-> 1451. Cannot delete or update a parent row-> a foreign key constraint fails (`college`.`post`, CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)) 0.000 sec
 
-#### Solution :
+#### Solution ->
 
 ```sql
 DELETE FROM post WHERE
@@ -699,9 +699,9 @@ DROP table post;
 TRUNCATE TABLE user;
 ```
 
-### Candidate Key:
+### Candidate Key->
 
-#### The minimal set of attributes that can uniquely identify a tuple is known as a candidate key. For example, STUD_NO in the STUDENT relation is a candidate key. It is a minimal super key. Here’s an example:
+#### The minimal set of attributes that can uniquely identify a tuple is known as a candidate key. For example, STUD_NO in the STUDENT relation is a candidate key. It is a minimal super key. Here’s an example->
 
 ```sql
 CREATE TABLE STUDENT (
@@ -714,9 +714,9 @@ CREATE TABLE STUDENT (
 
 -   In this table, STUD_NO is a candidate key because it can uniquely identify each student.
 
-### Super Key:
+### Super Key->
 
-#### The set of attributes that can uniquely identify a tuple is known as a super key. For example, STUD_NO, (STUD_NO, SNAME), etc. are super keys. A super key is a group of single or multiple keys that identifies rows in a table. Here’s an example:
+#### The set of attributes that can uniquely identify a tuple is known as a super key. For example, STUD_NO, (STUD_NO, SNAME), etc. are super keys. A super key is a group of single or multiple keys that identifies rows in a table. Here’s an example->
 
 ```sql
 CREATE TABLE STUDENT (
@@ -732,7 +732,7 @@ CREATE TABLE STUDENT (
 
 -   Remember, every candidate key is a super key, but not every super key is a candidate key.
 
-### Alternate Key:
+### Alternate Key->
 
 #### An alternate key is a candidate key that is not the primary key. It has all the properties to become a primary key and so is an alternate option. For example, consider a Customer table with Customer ID, Pan Number, and Email Address as unique attributes.
 
@@ -746,13 +746,13 @@ CREATE TABLE Customer (
 );
 ```
 
-## INSERT INTO SELECT Statement:-
+## INSERT INTO SELECT Statement->
 
 #### The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
 
 #### The INSERT INTO SELECT statement requires that the data types in source and target tables match.
 
--   Note: The existing records in the target table are unaffected.
+-   Note-> The existing records in the target table are unaffected.
 
 ```sql
 INSERT INTO Customers (CustomerName, City,Country)
@@ -772,7 +772,7 @@ SELECT IFNULL(Address,'Address is not given')
 FROM Suppliers ;
 ```
 
-### CASE Expression :-
+### CASE Expression ->
 
 ```sql
 
@@ -808,7 +808,7 @@ FROM Customers;
 ```
 
 -   AS is Optional
-    Actually, in most database languages, you can skip the AS keyword and get the same result:
+    Actually, in most database languages, you can skip the AS keyword and get the same result->
 
 ```sql
   SELECT CustomerID ID
@@ -822,7 +822,7 @@ SELECT column_name(s)
 FROM table_name AS alias_name;
 ```
 
-### Using [square brackets] for aliases with space characters:
+### Using [square brackets] for aliases with space characters->
 
 ```sql
 => SELECT ProductName AS [My Great Products]
