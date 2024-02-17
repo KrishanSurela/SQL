@@ -76,6 +76,6 @@ salary      rank
 
 ```sql
 select
-Dense_Rank() OVER (order by salary ASC) as rank
+Dense_Rank() OVER (order by salary DESC) as rank
 from Employee limit 2,1
 ```
