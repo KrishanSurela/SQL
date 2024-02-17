@@ -84,3 +84,18 @@ select Top 1 Fname ,Lname from EmployeeInfo  Order by Salary
 ```sql
 seletc Department,count(Department) from EmployeeInfo Group By Department Having count(Department)>1
 ```
+
+### Question 11
+
+### Write a query to find Emp Name who has more than salary from his/her reporting manager Salary? (self join)
+
+```sql
+select E.Emp_ID,E.Emp_Name,
+M.Emp_Name As Manager_Name,
+E.Salary AS Emp_Salary,
+M.Salary AS Manager_Salary
+from Emp_Manager E INNER JOIN Emp_Manager M
+ON E.Manager_ID = M.Emp_ID
+where
+Emp_Salary>Manager_Salary
+```
