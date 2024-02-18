@@ -78,4 +78,8 @@ salary      rank
 select
 Dense_Rank() OVER (order by salary DESC) as rank
 from Employee limit 2,1
+
+-- OR
+
+select distinct(salary) from Employee order by salary desc limit 2,1;
 ```
